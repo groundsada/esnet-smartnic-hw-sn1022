@@ -50,6 +50,10 @@ module cms_subsystem_wrapper
     hbm_temp_1_0,
     hbm_temp_2_0,
     interrupt_hbm_cattrip_0, 
+  `elsif __au45n__
+    hbm_temp_1_0,
+    hbm_temp_2_0,
+    interrupt_hbm_cattrip_0, 
   `elsif __au200__
     qsfp_resetl, 
     qsfp_modprsl,
@@ -102,8 +106,11 @@ module cms_subsystem_wrapper
     output   [1:0] qsfp_lpmode;
     output   [1:0] qsfp_modsell;
     (* X_INTERFACE_INFO = "xilinx.com:signal:interrupt:1.0 INTR.SATELLITE_GPIO_0 INTERRUPT" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME INTR.SATELLITE_GPIO_0, PortWidth 4, SENSITIVITY EDGE_RISING" *) input [3:0]satellite_gpio_0;
-  `elsif __sn1022__
-    (* X_INTERFACE_INFO = "xilinx.com:signal:interrupt:1.0 INTR.SATELLITE_GPIO_0 INTERRUPT" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME INTR.SATELLITE_GPIO_0, PortWidth 4, SENSITIVITY EDGE_RISING" *) input [1:0]satellite_gpio_0;
+  `elsif __au45n__
+      input [6:0]hbm_temp_1_0;
+      input [6:0]hbm_temp_2_0;
+      (* X_INTERFACE_INFO = "xilinx.com:signal:interrupt:1.0 INTR.INTERRUPT_HBM_CATTRIP_0 INTERRUPT" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME INTR.INTERRUPT_HBM_CATTRIP_0, PortWidth 1, SENSITIVITY LEVEL_HIGH" *) input [0:0]interrupt_hbm_cattrip_0;
+      (* X_INTERFACE_INFO = "xilinx.com:signal:interrupt:1.0 INTR.SATELLITE_GPIO_0 INTERRUPT" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME INTR.SATELLITE_GPIO_0, PortWidth 4, SENSITIVITY EDGE_RISING" *) input [3:0]satellite_gpio_0;
   `endif  
     
   (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.ACLK_CTRL_0 CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.ACLK_CTRL_0, ASSOCIATED_BUSIF s_axi_ctrl_0, ASSOCIATED_RESET aresetn_ctrl_0, CLK_DOMAIN cms_subsystem_0_aclk_ctrl_0, FREQ_HZ 50000000, FREQ_TOLERANCE_HZ 0, INSERT_VIP 0, PHASE 0.0" *) input aclk_ctrl_0;
@@ -276,9 +283,15 @@ module cms_subsystem_wrapper
   assign qsfp_resetl[1] = cms_subsystem_0_qsfp1_reset_l;
   
   assign satellite_gpio_0_1 = satellite_gpio_0;
-`elsif __sn1022__
-  wire [1:0]satellite_gpio_0_1;
+`elsif __au45n__
+  wire [6:0]hbm_temp_1_0_1;
+  wire [6:0]hbm_temp_2_0_1;
+  wire [0:0]interrupt_hbm_cattrip_0_1;
+  wire [3:0]satellite_gpio_0_1;
   assign satellite_gpio_0_1 = satellite_gpio_0;
+  assign hbm_temp_1_0_1 = hbm_temp_1_0[6:0];
+  assign hbm_temp_2_0_1 = hbm_temp_2_0[6:0];
+  assign interrupt_hbm_cattrip_0_1 = interrupt_hbm_cattrip_0[0];
 `endif 
 
   
@@ -329,8 +342,11 @@ module cms_subsystem_wrapper
           .qsfp1_modprs_l(qsfp1_modprs_l_0_1),
           .qsfp1_modsel_l(cms_subsystem_0_qsfp1_modsel_l),
           .qsfp1_reset_l(cms_subsystem_0_qsfp1_reset_l),  
-        `elsif __sn1022__
-          .satellite_gpio(satellite_gpio_0_1),
+        `elsif __au45n__
+          .hbm_temp_1(hbm_temp_1_0_1),
+          .hbm_temp_2(hbm_temp_2_0_1),
+          .interrupt_hbm_cattrip(interrupt_hbm_cattrip_0_1),
+          .satellite_gpio(satellite_gpio_0_1),   
         `endif
         .interrupt_host(cms_subsystem_0_interrupt_host),
         .s_axi_ctrl_araddr(s_axi_ctrl_0_1_ARADDR),

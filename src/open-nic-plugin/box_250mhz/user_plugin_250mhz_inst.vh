@@ -74,6 +74,8 @@ smartnic_250mhz #(
   .ref_clk_100mhz                   (ref_clk_100mhz),
 `elsif __au55c_
   .ref_clk_100mhz                   (ref_clk_100mhz),
+`elsif __au45n_
+  .ref_clk_100mhz                   (ref_clk_100mhz),
 `elsif __au50__
   .ref_clk_100mhz                   (ref_clk_100mhz),
 `elsif __au280__

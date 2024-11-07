@@ -103,6 +103,8 @@ p2p_250mhz #(
   .ref_clk_100mhz                   (ref_clk_100mhz),
 `elsif __au55c__
   .ref_clk_100mhz                   (ref_clk_100mhz),
+`elsif __au45n__
+  .ref_clk_100mhz                   (ref_clk_100mhz),
 `elsif __au50__
   .ref_clk_100mhz                   (ref_clk_100mhz),
 `elsif __au280__

@@ -151,6 +151,8 @@ module qdma_subsystem #(
   output                         ref_clk_100mhz,
 `elsif __au55c__
   output                         ref_clk_100mhz,
+`elsif __au45n__
+  output                         ref_clk_100mhz,
 `elsif __au50__
   output                         ref_clk_100mhz,
 `elsif __au280__
@@ -165,6 +167,8 @@ module qdma_subsystem #(
 `ifdef __au55n__
   output reg                     ref_clk_100mhz,
 `elsif __au55c__
+  output reg                     ref_clk_100mhz,
+`elsif __au45n__
   output reg                     ref_clk_100mhz,
 `elsif __au50__
   output reg                     ref_clk_100mhz,
@@ -444,6 +448,8 @@ module qdma_subsystem #(
     .ref_clk_100mhz                  (ref_clk_100mhz),
 `elsif __au55c__
     .ref_clk_100mhz                  (ref_clk_100mhz),
+`elsif __au45n__
+    .ref_clk_100mhz                  (ref_clk_100mhz),
 `elsif __au50__
     .ref_clk_100mhz                  (ref_clk_100mhz),
 `elsif __au280__
@@ -461,6 +467,8 @@ module qdma_subsystem #(
     ref_clk_100mhz = 1'b1;
 `elsif __au55c__
     ref_clk_100mhz = 1'b1;
+`elsif __au45n__
+    ref_clk_100mhz = 1'b1;
 `elsif __au50__
     ref_clk_100mhz = 1'b1;
 `elsif __au280__
@@ -474,6 +482,8 @@ module qdma_subsystem #(
 `ifdef __au55n__
   always #5000ps ref_clk_100mhz = ~ref_clk_100mhz;
 `elsif __au55c__
+  always #5000ps ref_clk_100mhz = ~ref_clk_100mhz;
+`elsif __au45n__
   always #5000ps ref_clk_100mhz = ~ref_clk_100mhz;
 `elsif __au50__
   always #5000ps ref_clk_100mhz = ~ref_clk_100mhz;

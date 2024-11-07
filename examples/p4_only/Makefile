@@ -23,7 +23,7 @@ SMARTNIC_DIR := ../..
 
 # BOARD - Name of AMD (Xilinx) Alveo board used for target application.
 # Supports 'au280', 'au250' and 'au55c'.  Default is 'au280'.
-#export BOARD := au280
+export BOARD := au45n
 
 # EXAMPLE_TEST_DIR - Full pathname of p4 test directory used for example design generation.
 export EXAMPLE_TEST_DIR := $(CURDIR)/p4/sim/test-fwd-p0

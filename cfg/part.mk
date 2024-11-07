@@ -20,3 +20,8 @@ ifeq ($(BOARD), au250)
 PART = xcu250-figd2104-2l-e
 BOARD_PART = xilinx.com:au250:part0:1.3
 endif
+
+ifeq ($(BOARD), au45n)
+PART = xcu26-vsva1365-2LV-e
+BOARD_PART = 
+endif

@@ -150,6 +150,8 @@ module qdma_subsystem_qdma_wrapper #(
   output         ref_clk_100mhz,
 `elsif __au55c__
   output         ref_clk_100mhz,
+`elsif __au45n__
+  output         ref_clk_100mhz,
 `elsif __au50__
   output         ref_clk_100mhz,
 `elsif __au280__

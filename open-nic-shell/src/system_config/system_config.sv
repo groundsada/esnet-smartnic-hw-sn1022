@@ -165,8 +165,11 @@ module system_config #(
   input                   [1:0] qsfp_intl,   
   output                  [1:0] qsfp_lpmode,
   output                  [1:0] qsfp_modsell,
-`elsif __sn1022__
-  input                   [1:0] satellite_gpio_0,
+`elsif __au45n__
+  input                   [3:0] satellite_gpio_0,
+  input                   [6:0] hbm_temp_1_0,
+  input                   [6:0] hbm_temp_2_0,
+  input                         interrupt_hbm_cattrip_0,  
 `endif
 
   input          [NUM_QDMA-1:0] aclk,
@@ -726,6 +729,10 @@ cms_subsystem_wrapper
     .hbm_temp_2_0            (hbm_temp_2_0),
     .interrupt_hbm_cattrip_0 (interrupt_hbm_cattrip_0),
   `elsif __au55c__
+    .hbm_temp_1_0            (hbm_temp_1_0),
+    .hbm_temp_2_0            (hbm_temp_2_0),
+    .interrupt_hbm_cattrip_0 (interrupt_hbm_cattrip_0), 
+  `elsif __au45n__
     .hbm_temp_1_0            (hbm_temp_1_0),
     .hbm_temp_2_0            (hbm_temp_2_0),
     .interrupt_hbm_cattrip_0 (interrupt_hbm_cattrip_0), 

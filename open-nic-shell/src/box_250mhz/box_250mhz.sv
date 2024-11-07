@@ -93,6 +93,8 @@ module box_250mhz #(
   input                          ref_clk_100mhz,
 `elsif __au55c__
   input                          ref_clk_100mhz,
+`elsif __au45n__
+  input                          ref_clk_100mhz,
 `elsif __au50__
   input                          ref_clk_100mhz,
 `elsif __au280__
