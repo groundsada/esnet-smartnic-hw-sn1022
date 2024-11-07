@@ -1,0 +1,203 @@
+name: htable_cuckoo
+info: |
+  This register map describes a register block for
+  control and monitoring of a cuckoo hash table
+regs:
+  - default:
+      width: 32
+      access: rw
+      init: 0
+
+  - name: info
+    desc: Info (reports block parameterization)
+    access: ro
+    fields:
+        - name: num_tables
+          width: 8
+        - name: key_width
+          width: 12
+        - name: value_width
+          width: 12
+
+  - name: control
+    access: rw
+    fields:
+        - name:  reset
+          desc:  (soft) block reset
+          width: 1
+          init:  0
+        - name:  enable
+          desc:  (soft) block enable
+          width: 1
+          init:  1
+
+  - name: status
+    access: ro
+    fields:
+        - name:  reset_mon
+          desc:  block reset monitor
+          width: 1
+        - name:  enable_mon
+          desc:  block enable monitor
+          width: 1
+        - name:  ready_mon
+          desc:  block ready monitor
+          width: 1
+
+  - name: cuckoo_control
+    access: rw
+    fields:
+        - name: ops_limit
+          desc: maximum number of cuckoo operations before insertion is aborted (simplified cycle detection)
+          width: 32
+          init: 100
+
+  - name: dbg_status
+    desc: (Debug) status monitor.
+    access: ro
+    fields:
+        - name: state
+          desc: FSM state.
+          width: 8
+          enum_hex:
+              00 : RESET
+              01 : IDLE
+              02 : CLEAR
+              03 : CLEAR_PENDING
+              04 : CLEAR_NEXT
+              05 : CLEAR_STASH
+              06 : CLEAR_STASH_PENDING
+              07 : CHECK
+              08 : CHECK_PENDING
+              09 : CHECK_NEXT
+              0A : CHECK_FOUND
+              0B : CHECK_NOT_FOUND
+              0C : DELETE
+              0D : DELETE_PENDING
+              0E : INSERT_GET
+              0F : INSERT_GET_PENDING
+              10 : INSERT_PUSH
+              11 : INSERT_PUSH_PENDING
+              12 : INSERT_SET
+              13 : INSERT_SET_PENDING
+              14 : INSERT_POP
+              15 : INSERT_POP_PENDING
+              16 : INSERT_NEXT
+              17 : DONE
+              18 : INSERT_KEY_EXISTS
+              19 : INSERT_LOOP
+              1A : DELETE_KEY_NOT_FOUND
+              1B : TBL_ERROR
+              1C : STASH_ERROR
+              1D : ERROR
+
+  - name: cnt_control
+    access: wr_evt
+    desc: Latch counts. Acts on all cnt_* counters within block.
+    fields:
+        - name: _clear
+          width: 1
+          desc: Latch and clear when clear is set; Latch (and preserve) when clear is unset.
+
+  - name: cnt_insert_ok_upper
+    access: ro
+    desc: Count of (successful) table insertions (bits 63:32)
+    width: 32
+
+  - name: cnt_insert_ok_lower
+    access: ro
+    desc: Count of (successful) table insertions (bits 31:0)
+    width: 32
+
+  - name: cnt_insert_fail_upper
+    access: ro
+    desc: Count of failed table insertions (bits 63:32)
+    width: 32
+
+  - name: cnt_insert_fail_lower
+    access: ro
+    desc: Count of failed table insertions (bits 31:0)
+    width: 32
+
+  - name: cnt_delete_ok_upper
+    access: ro
+    desc: Count of (successful) table deletions (bits 63:32)
+    width: 32
+
+  - name: cnt_delete_ok_lower
+    access: ro
+    desc: Count of (successful) table deletions (bits 31:0)
+    width: 32
+
+  - name: cnt_delete_fail_upper
+    access: ro
+    desc: Count of failed table deletions (bits 63:32)
+    width: 32
+
+  - name: cnt_delete_fail_lower
+    access: ro
+    desc: Count of failed table deletions (bits 31:0)
+    width: 32
+
+  - name: cnt_insert_key_exists
+    access: ro
+    desc: Count of insertion failures due to duplicate key
+    width: 32
+
+  - name: cnt_insert_loop
+    access: ro
+    desc: Count of insertion failures due to insertion loop detected
+    width: 32
+
+  - name: cnt_delete_key_not_found
+    access: ro
+    desc: Count of deletion failures due to key not found
+    width: 32
+
+  - name: cnt_tbl_error
+    access: ro
+    desc: Count of hash table access errors
+    width: 32
+
+  - name: cnt_stash_error
+    access: ro
+    desc: Count of bubble stash access errors
+    width: 32
+
+  - name: cnt_active
+    access: ro
+    desc: Count of currently active table entries (latched)
+    width: 32
+
+  - name: cnt_active_min
+    access: ro
+    desc: Min number of active table entries (since last clear).
+    width: 32
+
+  - name: cnt_active_max
+    access: ro
+    desc: Max number of active table entries (since last clear).
+    width: 32
+
+  - name: dbg_cnt_control
+    access: wr_evt
+    desc: Manage debug counts. Acts on all dbg_cnt_* counters within block.
+    fields:
+        - name: _clear
+          width: 1
+          desc: Clear counters on write (when set); ignored when clear is unset.
+
+  - name: dbg_cnt_active
+    access: ro
+    desc: Count of currently active timers (free-run)
+    width: 32
+
+  - name: dbg_cnt_cuckoo_ops_last
+    access: ro
+    desc: Count of cuckoo operations required for last insertion.
+    width: 32
+
+  - name: dbg_cnt_cuckoo_ops_max
+    access: ro
+    desc: Maximum number of cuckoo operations required for insertion (since last clear).
+    width: 32
